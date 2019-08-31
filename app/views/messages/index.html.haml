@@ -1,0 +1,45 @@
+.body
+  -# .flash-box
+  -#   グループを作成しました
+  .wrapper
+
+    = render 'shared/chat-side'
+
+    .chat-main
+      .main-header
+        .main-header__left-box
+          %h2.main-header__left-box__current-group
+            グループ名
+          %ul.main-header__left-box__member-list
+            Member：
+            %li.main-header__left-box__member-list__member
+              メンバー名
+        =link_to '' do
+          .main-header__edit-btn
+            Edit
+      .messages
+        .message
+          .message__upper-info
+            %p.message__upper-info__talker
+              メンバー名A
+            %p.message__upper-info__date
+              投稿日A
+          %p.message__text
+            テキストB
+        .message
+          .message__upper-info
+            %p.message__upper-info__talker
+              メンバー名B
+            %p.message__upper-info__date
+              投稿日B
+          %p.message__text
+            テキストB
+
+      .form
+        %form
+          %input.form__message{placeholder: 'type a message'}
+          .form__mask
+            %label.form__mask__image
+              = fa_icon 'picture-o', class: 'icon'
+              %input.hidden{type: 'file'}
+          %input.form__submit{type: 'submit', value: 'Send'}
