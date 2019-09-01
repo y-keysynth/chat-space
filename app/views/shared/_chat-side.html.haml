@@ -12,13 +12,6 @@
             = fa_icon 'cog', class: 'icon'
   .groups
     .group
-      %p.group__group-name
-        = link_to '' do
-          グループ名１
-      %p.group__latest-message
-        = link_to '' do
-          最新メッセージ１
-    .group
       - current_user.groups.each do |group|
         = link_to '#' do
           .group__name
