@@ -17,23 +17,9 @@
         =link_to '' do
           .main-header__edit-btn
             Edit
+
       .messages
-        .message
-          .message__upper-info
-            %p.message__upper-info__talker
-              メンバー名A
-            %p.message__upper-info__date
-              投稿日A
-          %p.message__text
-            テキストB
-        .message
-          .message__upper-info
-            %p.message__upper-info__talker
-              メンバー名B
-            %p.message__upper-info__date
-              投稿日B
-          %p.message__text
-            テキストB
+        = render @messages
 
       .form
         = form_for [@group, @message] do |f|
