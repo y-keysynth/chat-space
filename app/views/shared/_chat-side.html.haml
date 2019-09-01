@@ -19,9 +19,9 @@
         = link_to '' do
           最新メッセージ１
     .group
-      %p.group__group-name
-        = link_to '' do
-          グループ名２
-      %p.group__latest-message
-        = link_to '' do
-          最新メッセージ２
+      - current_user.groups.each do |group|
+        = link_to '#' do
+          .group__name
+            = group.name
+          .group__message
+            メッセージはまだありません。
