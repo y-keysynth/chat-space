@@ -3,7 +3,7 @@ $(function(){
     var html = `<div class="message">
                   <div class="message__upper-info">
                   <p class="message__upper-info__talker">
-                  ${message.name[:user_id]}
+                  ${message.name}
                   </p>
                   <p class="message__upper-info__date">
                   ${message.created_at}
@@ -18,10 +18,6 @@ $(function(){
     return html;
   }
 
-
-
-
-
   $('#new_message').on('submit', function(e){
     e.preventDefault();
     var formData = new FormData(this);
@@ -35,8 +31,10 @@ $(function(){
       contentType: false,
     })
     .done(function(message){
+      console.log(message);
       var html = buildMessage(message);
       $('.messages').append(html);
+      $('.messages').animate({ scrollTop: $('.messages')[0].scrollHeight}, 'fast');
     })
     .fail(function(message){
     })
