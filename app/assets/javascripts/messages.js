@@ -31,12 +31,14 @@ $(function(){
       contentType: false,
     })
     .done(function(message){
-      console.log(message);
       var html = buildMessage(message);
       $('.messages').append(html);
       $('.messages').animate({ scrollTop: $('.messages')[0].scrollHeight}, 'fast');
+      $('#message_content').val('');
+      $('.form__submit').removeAttr('disabled');
     })
-    .fail(function(message){
+    .fail(function(){
+      alert('メッセージを入力してください');
     })
   })
 });
