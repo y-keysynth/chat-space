@@ -38,7 +38,6 @@ $(document).on('turbolinks:load', function(){
         var html = buildMessage(message);
         $('.messages').animate({ scrollTop: $('.messages')[0].scrollHeight}, 'fast');
         $('.messages').append(html);
-        debugger;
         $('#new_message')[0].reset();
         $('.form__submit').removeAttr('disabled');
       })
