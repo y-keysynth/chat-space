@@ -29,7 +29,6 @@ $(function(){
     })
 
     .done(function(users) {
-      console.log(users)
       $("#user-search-result").empty();
       if (users.length !== 0) {
         users.forEach(function(user){
@@ -44,4 +43,10 @@ $(function(){
       alert('ユーザー検索に失敗しました');
     })
   })
+  
+  $(function(){
+    $(document).on('click', '.user-search-add', function() {
+    console.log("ok");
+  })
+})
 })
