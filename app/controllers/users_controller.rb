@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_action :authenticate_user!, only: :index
 
   def index
-    @users = User.where('name LIKE(?)', "%#{params[:keyword]}%")
+    @users = User.where('name LIKE(?)', "%#{params[:keyword]}%").where.not(id:current_user.id)
     respond_to do |format|
       format.html
       format.json
