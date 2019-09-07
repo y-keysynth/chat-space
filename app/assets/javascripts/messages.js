@@ -1,8 +1,10 @@
 $(document).on('turbolinks:load', function(){
   $(function(){
     function buildMessage(message) {
-      var imagejudg = (message.image.url === null) ? '' : `<img src="${message.image.url}">`;
-      var html = `<div class="message">
+      var content = (message.content) ? `${message.content} ` : "";
+      var image = (message.image.url === null) ? '' : `<img src="${message.image.url}">`;
+
+      var html = `<div class="message" data-message-id="${message.id}"> 
                     <div class="message__upper-info">
                     <p class="message__upper-info__talker">
                     ${message.name}
@@ -12,9 +14,10 @@ $(document).on('turbolinks:load', function(){
                     </p>
                     </div>
                     <p class="message__text">
-                    ${message.content}
-                    </p><p class="lower-message__content">
-                    ${imagejudg}
+                    ${content}
+                    </p>
+                    <p class="lower-message__content">
+                    ${image}
                     </p>
                     <p></p>
                   </div>`
@@ -56,7 +59,7 @@ $(document).on('turbolinks:load', function(){
       url: '/groups/${id:last}/api/messages',
       //ルーティングで設定した通りhttpメソッドをgetに指定
       // var rul = api/messages#index {:format=>"json"} して↑のurl: urlがいいかも？
-      
+
       type: 'get',
       dataType: 'json',
       //dataオプションでリクエストに値を含める
@@ -75,60 +78,5 @@ $(document).on('turbolinks:load', function(){
     .fail(function() {
       console.log('error');
     });
-  };
-
-  var buildMessageHTML = function(message) {
-    if (message.content && message.image.url) {
-      //data-idが反映されるようにしている
-      var html = `<div class="message" data-message-id="${message.id}"> 
-                    <div class="upper-message">
-                      <div class="upper-message__user-name">
-                        ${message.user_name}
-                      </div>
-                      <div class="upper-message__date">
-                        ${message.created_at}
-                      </div>
-                    </div>
-                    <div class="lower-meesage">
-                      <p class="lower-message__content">
-                        ${message.content}
-                      </p>
-                      ${message.image}
-                    </div>
-                  </div>`
-    } else if (message.content) {
-      //同様に、data-idが反映されるようにしている
-      var html = `<div class="message" data-message-id="${message.id}"> 
-                    <div class="upper-message">
-                      <div class="upper-message__user-name">
-                        ${message.user_name}
-                      </div>
-                      <div class="upper-message__date">
-                        ${message.created_at}
-                      </div>
-                    </div>
-                    <div class="lower-meesage">
-                      <p class="lower-message__content">
-                        ${message.content}
-                      </p>
-                    </div>
-                  </div>`
-    } else if (message.image.url) {
-      //同様に、data-idが反映されるようにしている
-      var html = `<div class="message" data-message-id="${message.id}"> 
-                    <div class="upper-message">
-                      <div class="upper-message__user-name">
-                        ${message.user_name}
-                      </div>
-                      <div class="upper-message__date">
-                        ${message.created_at}
-                      </div>
-                    </div>
-                    <div class="lower-meesage">
-                      ${message.image}
-                    </div>
-                  </div>`
-    };
-    return html;
   };
 });
