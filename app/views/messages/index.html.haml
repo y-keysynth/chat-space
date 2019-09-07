@@ -15,7 +15,7 @@
             %li.main-header__left-box__member-list__member
               -@group.users.each do |users|
                 =users.name
-        =link_to edit_group_path(@group.id) do
+        =link_to edit_group_path(@group) do
           .main-header__edit-btn
             Edit
 
