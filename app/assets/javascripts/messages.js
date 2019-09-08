@@ -19,7 +19,6 @@ $(document).on('turbolinks:load', function(){
                     <p class="lower-message__content">
                     ${image}
                     </p>
-                    <p></p>
                   </div>`
       return html;
     }
@@ -49,34 +48,31 @@ $(document).on('turbolinks:load', function(){
         $('.form__submit').removeAttr('disabled');
       })
     })
+
+    var reloadMessages = function() {
+      //カスタムデータ属性を利用し、ブラウザに表示されている最新メッセージのidを取得
+      var last_message_id = $('.message:last').data("message-id");
+      var href = 'api/messages#index {:format=>"json"}'
+
+      $.ajax({
+        url:  href,
+        type: 'get',
+        dataType: 'json',
+        data: {id: last_message_id}
+      })
+      .done(function(messages) {
+        console.log(messages);
+        var insertHTML = '';
+        messages.forEach(function(message){
+          insertHTML = buildMessage(message);
+        $('.messages').append(insertHTML)
+        });
+        $('.messages').animate({ scrollTop: $('.messages')[0].scrollHeight}, 'fast');
+      })
+      .fail(function () {
+        alert('自動更新に失敗');
+      });
+    };
+    setInterval(reloadMessages, 5000);
   });
-  
-  var reloadMessages = function() {
-    //カスタムデータ属性を利用し、ブラウザに表示されている最新メッセージのidを取得
-    last_message_id = $('.message:last').data("message-id");
-    $.ajax({
-      //ルーティングで設定した通り/groups/id番号/api/messagesとなるよう文字列を書く
-      url: '/groups/${id:last}/api/messages',
-      //ルーティングで設定した通りhttpメソッドをgetに指定
-      // var rul = api/messages#index {:format=>"json"} して↑のurl: urlがいいかも？
-
-      type: 'get',
-      dataType: 'json',
-      //dataオプションでリクエストに値を含める
-      data: {id: last_message_id}
-    })
-    .done(function(messages) {
-      //追加するHTMLの入れ物を作る
-      var insertHTML = '';
-      //配列messagesの中身一つ一つを取り出し、HTMLに変換したものを入れ物に足し合わせる
-
-      //メッセージが入ったHTMLを取得
-
-      //メッセージを追加
-
-    })
-    .fail(function() {
-      console.log('error');
-    });
-  };
 });
