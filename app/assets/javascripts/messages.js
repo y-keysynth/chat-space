@@ -50,28 +50,30 @@ $(document).on('turbolinks:load', function(){
     })
 
     var reloadMessages = function() {
-      //カスタムデータ属性を利用し、ブラウザに表示されている最新メッセージのidを取得
-      var last_message_id = $('.message:last').data("message-id");
-      var href = 'api/messages#index {:format=>"json"}'
+      if (window.location.href.match(/\/groups\/\d+\/messages/)){
+        //カスタムデータ属性を利用し、ブラウザに表示されている最新メッセージのidを取得
+        var last_message_id = $('.message:last').data("message-id");
+        var href = 'api/messages#index {:format=>"json"}'
 
-      $.ajax({
-        url:  href,
-        type: 'get',
-        dataType: 'json',
-        data: {id: last_message_id}
-      })
-      .done(function(messages) {
-        console.log(messages);
-        var insertHTML = '';
-        messages.forEach(function(message){
-          insertHTML = buildMessage(message);
-        $('.messages').append(insertHTML)
+        $.ajax({
+          url:  href,
+          type: 'get',
+          dataType: 'json',
+          data: {id: last_message_id}
+        })
+        .done(function(messages) {
+          console.log(messages);
+          var insertHTML = '';
+          messages.forEach(function(message){
+            insertHTML = buildMessage(message);
+          $('.messages').append(insertHTML)
+          });
+          $('.messages').animate({ scrollTop: $('.messages')[0].scrollHeight}, 'fast');
+        })
+        .fail(function () {
+          alert('自動更新に失敗');
         });
-        $('.messages').animate({ scrollTop: $('.messages')[0].scrollHeight}, 'fast');
-      })
-      .fail(function () {
-        alert('自動更新に失敗');
-      });
+      }
     };
     setInterval(reloadMessages, 5000);
   });
